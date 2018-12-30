@@ -44,7 +44,7 @@ namespace Passenger.IntegrationTests.Controllers
 		[Fact]
 		public async void Get_GivenUniqueEmail_UserShouldBeCreated()
 		{
-			var command = new CreateUser
+			var command = new CreateUserCommand
 			{
 				Email = "user10@example.com",
 				Username = "user10",

@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Passenger.Core.Repositories;
+using Passenger.Infrastructure.IoC.Modules;
 using Passenger.Infrastructure.Mappers;
 using Passenger.Infrastructure.Repositories;
 using Passenger.Infrastructure.Services;
@@ -19,17 +23,24 @@ namespace Passenger.Web
 
 		public IConfiguration Configuration { get; }
 
-		public void ConfigureServices(IServiceCollection services)
+		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-			services.AddScoped<IUserRepository, UserRepository>();
-			services.AddScoped<IUserService, UserService>();
+			var builder = new ContainerBuilder();
+			builder.Populate(services);
 
-			services.AddScoped<IDriverRepository, DriverRepository>();
-			services.AddScoped<IDriverService, DriverService>();
+			builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+			builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
 
-			services.AddSingleton(AutoMapperConfig.Initialize());
+			builder.RegisterType<DriverRepository>().As<IDriverRepository>().InstancePerLifetimeScope();
+			builder.RegisterType<DriverService>().As<IDriverService>().InstancePerLifetimeScope();
+
+			builder.RegisterInstance(AutoMapperConfig.Initialize()).SingleInstance();
+
+			builder.RegisterModule<CommandModule>();
+
+			return new AutofacServiceProvider(builder.Build());
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

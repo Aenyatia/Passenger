@@ -1,8 +1,8 @@
-﻿using Passenger.Infrastructure.CQS;
+﻿using Passenger.Infrastructure.CQS.Commands;
 
 namespace Passenger.Infrastructure.Commands.User
 {
-	public class CreateUser : ICommand
+	public class CreateUserCommand : ICommand
 	{
 		public string Email { get; set; }
 		public string Password { get; set; }

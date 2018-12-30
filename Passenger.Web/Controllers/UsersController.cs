@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Passenger.Infrastructure.Commands.User;
+using Passenger.Infrastructure.CQS.Commands;
 using Passenger.Infrastructure.Services;
 using System.Threading.Tasks;
-using Passenger.Infrastructure.Commands.User;
 
 namespace Passenger.Web.Controllers
 {
@@ -10,10 +11,12 @@ namespace Passenger.Web.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IUserService _userService;
+		private readonly ICommandDispatcher _commandDispatcher;
 
-		public UsersController(IUserService userService)
+		public UsersController(IUserService userService, ICommandDispatcher commandDispatcher)
 		{
 			_userService = userService;
+			_commandDispatcher = commandDispatcher;
 		}
 
 		[HttpGet("{email}")]
@@ -27,9 +30,9 @@ namespace Passenger.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(CreateUser command)
+		public async Task<IActionResult> Post(CreateUserCommand command)
 		{
-			await _userService.Register(command.Email, command.Username, command.Password);
+			await _commandDispatcher.Dispatch(command);
 
 			return Created($"users/{command.Email}", null);
 		}
