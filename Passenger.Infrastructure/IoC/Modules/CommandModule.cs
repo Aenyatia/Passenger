@@ -16,7 +16,7 @@ namespace Passenger.Infrastructure.IoC.Modules
 				.InstancePerLifetimeScope();
 
 			//builder.RegisterType<CreateUserHandler>()
-			//	.As<ICommandHandler<CreateUserCommand>>()
+			//	.As<ICommandHandler<CreateUser>>()
 			//	.InstancePerLifetimeScope();
 		}
 	}

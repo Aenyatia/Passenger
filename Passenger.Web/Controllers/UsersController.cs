@@ -30,7 +30,7 @@ namespace Passenger.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(CreateUserCommand command)
+		public async Task<IActionResult> Post(CreateUser command)
 		{
 			await _commandDispatcher.Dispatch(command);
 

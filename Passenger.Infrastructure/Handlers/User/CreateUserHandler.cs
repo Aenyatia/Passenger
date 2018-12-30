@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Handlers.User
 {
-	public class CreateUserHandler : ICommandHandler<CreateUserCommand>
+	public class CreateUserHandler : ICommandHandler<CreateUser>
 	{
 		private readonly IUserService _userService;
 
@@ -14,7 +14,7 @@ namespace Passenger.Infrastructure.Handlers.User
 			_userService = userService;
 		}
 
-		public async Task Handle(CreateUserCommand command)
+		public async Task Handle(CreateUser command)
 		{
 			await _userService.Register(command.Email, command.Username, command.Password);
 		}

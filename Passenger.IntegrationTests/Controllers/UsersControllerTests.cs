@@ -5,20 +5,16 @@ using Passenger.Infrastructure.Commands.User;
 using Passenger.Infrastructure.Dto;
 using Passenger.Web;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Passenger.IntegrationTests.Controllers
 {
-	public class UsersControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+	public class UsersControllerTests : CoreController
 	{
-		private readonly HttpClient _client;
-
 		public UsersControllerTests(WebApplicationFactory<Startup> factory)
+			: base(factory)
 		{
-			_client = factory.CreateClient();
 		}
 
 		[Fact]
@@ -36,7 +32,7 @@ namespace Passenger.IntegrationTests.Controllers
 		{
 			var email = "notuser1@example.com";
 
-			var response = await _client.GetAsync($"/users/{email}");
+			var response = await Client.GetAsync($"/users/{email}");
 
 			response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.NotFound);
 		}
@@ -44,7 +40,7 @@ namespace Passenger.IntegrationTests.Controllers
 		[Fact]
 		public async void Get_GivenUniqueEmail_UserShouldBeCreated()
 		{
-			var command = new CreateUserCommand
+			var command = new CreateUser
 			{
 				Email = "user10@example.com",
 				Username = "user10",
@@ -52,7 +48,7 @@ namespace Passenger.IntegrationTests.Controllers
 			};
 			var payload = GetPayload(command);
 
-			var response = await _client.PostAsync("/users", payload);
+			var response = await Client.PostAsync("/users", payload);
 
 			response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.Created);
 			response.Headers.Location.ToString().Should().BeEquivalentTo($"users/{command.Email}");
@@ -61,15 +57,9 @@ namespace Passenger.IntegrationTests.Controllers
 			user.Email.Should().BeEquivalentTo(command.Email);
 		}
 
-		private static StringContent GetPayload(object obj)
-		{
-			var json = JsonConvert.SerializeObject(obj);
-			return new StringContent(json, Encoding.UTF8, "application/json");
-		}
-
 		private async Task<UserDto> GetUserDto(string email)
 		{
-			var response = await _client.GetAsync($"users/{email}");
+			var response = await Client.GetAsync($"users/{email}");
 			var content = await response.Content.ReadAsStringAsync();
 
 			return JsonConvert.DeserializeObject<UserDto>(content);
