@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Services
 {
-	public class DriverService
+	public class DriverService : IDriverService
 	{
 		private readonly IDriverRepository _driverRepository;
 

@@ -24,6 +24,9 @@ namespace Passenger.Web
 
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IUserService, UserService>();
+
+			services.AddScoped<IDriverRepository, DriverRepository>();
+			services.AddScoped<IDriverService, DriverService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

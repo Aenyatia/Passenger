@@ -8,11 +8,16 @@ namespace Passenger.Core.Domain
 		public string Model { get; private set; }
 		public int Seats { get; private set; }
 
-		public Vehicle(string brand, string model, int seats)
+		private Vehicle(string brand, string model, int seats)
 		{
 			SetBrand(brand);
 			SetModel(model);
 			SetSeats(seats);
+		}
+
+		public Vehicle Create(string brand, string model, int seats)
+		{
+			return new Vehicle(brand, model, seats);
 		}
 
 		private void SetBrand(string brand)
