@@ -7,5 +7,10 @@ namespace Passenger.Core.Domain
 		public Guid Id { get; private set; }
 		public Guid UserId { get; private set; }
 		public Node Address { get; private set; }
+
+		public Passenger()
+		{
+			
+		}
 	}
 }
