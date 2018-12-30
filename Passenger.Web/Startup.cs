@@ -5,23 +5,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Passenger.Core.Repositories;
-using Passenger.Infrastructure.IoC.Modules;
-using Passenger.Infrastructure.Mappers;
-using Passenger.Infrastructure.Repositories;
-using Passenger.Infrastructure.Services;
+using Passenger.Infrastructure.IoC;
 using System;
 
 namespace Passenger.Web
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
-
 		public IConfiguration Configuration { get; }
+
+		public Startup(IConfiguration configuration)
+			=> Configuration = configuration;
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
@@ -29,31 +23,16 @@ namespace Passenger.Web
 
 			var builder = new ContainerBuilder();
 			builder.Populate(services);
-
-			builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
-			builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
-
-			builder.RegisterType<DriverRepository>().As<IDriverRepository>().InstancePerLifetimeScope();
-			builder.RegisterType<DriverService>().As<IDriverService>().InstancePerLifetimeScope();
-
-			builder.RegisterInstance(AutoMapperConfig.Initialize()).SingleInstance();
-
-			builder.RegisterModule<CommandModule>();
-			builder.RegisterModule(new SettingModule(Configuration));
-
+			builder.RegisterModule(new ContainerModule(Configuration));
 			return new AutofacServiceProvider(builder.Build());
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			if (env.IsDevelopment())
-			{
 				app.UseDeveloperExceptionPage();
-			}
 			else
-			{
 				app.UseHsts();
-			}
 
 			app.UseHttpsRedirection();
 			app.UseMvc();

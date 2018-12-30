@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using Passenger.Infrastructure.Dto;
+﻿using Passenger.Infrastructure.Dto;
+using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Services
 {
-	public interface IUserService
+	public interface IUserService : IService
 	{
 		Task<UserDto> Get(string email);
 
