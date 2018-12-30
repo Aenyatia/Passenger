@@ -30,7 +30,7 @@ namespace Passenger.Core.Domain
 			if (string.IsNullOrWhiteSpace(username))
 				throw new ArgumentException("Username is required.", nameof(username));
 
-			if (Regex.IsMatch(username, @"^[\w]"))
+			if (Regex.IsMatch(username, @"[^\w]+$"))
 				throw new ArgumentException("Invalid username.", nameof(username));
 
 			if (Username == username)
@@ -45,7 +45,7 @@ namespace Passenger.Core.Domain
 			if (string.IsNullOrWhiteSpace(email))
 				throw new ArgumentException("Email is required.", nameof(email));
 
-			if (Regex.IsMatch(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase))
+			if (!Regex.IsMatch(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase))
 				throw new ArgumentException("Invalid email.", nameof(email));
 
 			if (Email == email)
@@ -60,8 +60,17 @@ namespace Passenger.Core.Domain
 			if (string.IsNullOrWhiteSpace(password))
 				throw new ArgumentException("Password is required.", nameof(password));
 
-			if (Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$"))
-				throw new ArgumentException("Invalid password.", nameof(password));
+			if (!Regex.IsMatch(password, @"^(?=.*[A-Z])"))
+				throw new Exception("Required [A - Z].");
+
+			if (!Regex.IsMatch(password, @"^(?=.*[a-z])"))
+				throw new Exception("Required [a - z].");
+
+			if (!Regex.IsMatch(password, @"^(?=.*\d)"))
+				throw new Exception("Required [0 - 9].");
+
+			if (!Regex.IsMatch(password, @".{6,15}$"))
+				throw new Exception("Required lenght 6 - 15.");
 
 			if (Password == password)
 				return;

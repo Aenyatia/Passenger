@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Passenger.Core.Repositories;
+using Passenger.Infrastructure.Mappers;
 using Passenger.Infrastructure.Repositories;
 using Passenger.Infrastructure.Services;
 
@@ -27,6 +28,8 @@ namespace Passenger.Web
 
 			services.AddScoped<IDriverRepository, DriverRepository>();
 			services.AddScoped<IDriverService, DriverService>();
+
+			services.AddSingleton(AutoMapperConfig.Initialize());
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
