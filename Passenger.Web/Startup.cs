@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Passenger.Core.Repositories;
+using Passenger.Infrastructure.Repositories;
+using Passenger.Infrastructure.Services;
 
 namespace Passenger.Web
 {
@@ -18,6 +21,9 @@ namespace Passenger.Web
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IUserService, UserService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

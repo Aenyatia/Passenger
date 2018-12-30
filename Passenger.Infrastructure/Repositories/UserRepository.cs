@@ -9,7 +9,12 @@ namespace Passenger.Infrastructure.Repositories
 {
 	public class UserRepository : IUserRepository
 	{
-		private static readonly ISet<User> Users = new HashSet<User>();
+		private static readonly ISet<User> Users = new HashSet<User>
+		{
+			new User("user1@example.com", "secred", "salt", "user1"),
+			new User("user2@example.com", "secred", "salt", "user2"),
+			new User("user3@example.com", "secred", "salt", "user3")
+		};
 
 		public async Task<User> Get(Guid id)
 		{
