@@ -10,9 +10,10 @@ namespace Passenger.Core.Domain
 		public IEnumerable<Route> Routes { get; private set; }
 		public IEnumerable<DailyRoute> DailyRoutes { get; private set; }
 
-		public Driver()
+		public Driver(Guid userId, Vehicle vehicle)
 		{
-
+			UserId = userId;
+			Vehicle = vehicle;
 		}
 	}
 }

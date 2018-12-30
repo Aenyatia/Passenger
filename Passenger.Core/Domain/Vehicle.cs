@@ -15,7 +15,7 @@ namespace Passenger.Core.Domain
 			SetSeats(seats);
 		}
 
-		public Vehicle Create(string brand, string model, int seats)
+		public static Vehicle Create(string brand, string model, int seats)
 		{
 			return new Vehicle(brand, model, seats);
 		}
