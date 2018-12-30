@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Passenger.Infrastructure.Settings;
 using System.Collections.Generic;
 
 namespace Passenger.Web.Controllers
@@ -7,11 +8,18 @@ namespace Passenger.Web.Controllers
 	[ApiController]
 	public class ValuesController : ControllerBase
 	{
+		private readonly GeneralSettings _generalSettings;
+
+		public ValuesController(GeneralSettings generalSettings)
+		{
+			_generalSettings = generalSettings;
+		}
+
 		// GET api/values
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
-			return new[] { "value1", "value2" };
+			return new[] { "value1", "value2", _generalSettings.AppName };
 		}
 
 		// GET api/values/5

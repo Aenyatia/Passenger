@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +10,7 @@ using Passenger.Infrastructure.IoC.Modules;
 using Passenger.Infrastructure.Mappers;
 using Passenger.Infrastructure.Repositories;
 using Passenger.Infrastructure.Services;
+using System;
 
 namespace Passenger.Web
 {
@@ -39,6 +39,7 @@ namespace Passenger.Web
 			builder.RegisterInstance(AutoMapperConfig.Initialize()).SingleInstance();
 
 			builder.RegisterModule<CommandModule>();
+			builder.RegisterModule(new SettingModule(Configuration));
 
 			return new AutofacServiceProvider(builder.Build());
 		}
