@@ -19,7 +19,11 @@ namespace Passenger.Web.Controllers
 		[HttpGet("{email}")]
 		public async Task<IActionResult> Get(string email)
 		{
-			return Ok(await _userService.Get(email));
+			var user = await _userService.Get(email);
+			if (user == null)
+				return NotFound();
+
+			return Ok(user);
 		}
 
 		[HttpPost]
@@ -27,7 +31,7 @@ namespace Passenger.Web.Controllers
 		{
 			await _userService.Register(command.Email, command.Username, command.Password);
 
-			return Created(string.Empty, null);
+			return Created($"users/{command.Email}", null);
 		}
 	}
 }
