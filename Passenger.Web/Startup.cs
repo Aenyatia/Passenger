@@ -14,6 +14,7 @@ using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
 using System;
 using System.Text;
+using Passenger.Web.Framework;
 
 namespace Passenger.Web
 {
@@ -73,6 +74,7 @@ namespace Passenger.Web
 				app.UseHsts();
 
 			app.UseHttpsRedirection();
+			app.UseOwnExceptionHandler();
 			app.UseAuthentication();
 			app.UseMvc();
 		}

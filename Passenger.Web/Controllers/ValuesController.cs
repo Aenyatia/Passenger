@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Settings;
 using System.Collections.Generic;
 
@@ -19,6 +20,7 @@ namespace Passenger.Web.Controllers
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
+			throw new Exception();
 			return new[] { "value1", "value2", _generalSettings.AppName };
 		}
 
