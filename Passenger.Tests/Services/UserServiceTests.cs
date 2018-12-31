@@ -14,9 +14,10 @@ namespace Passenger.Tests.Services
 		{
 			var userRepositoryMock = new Mock<IUserRepository>();
 			var mapperMock = new Mock<IMapper>();
-			var userService = new UserService(userRepositoryMock.Object, mapperMock.Object);
+			var encrypterMock = new Mock<IEncrypter>();
+			var userService = new UserService(userRepositoryMock.Object, encrypterMock.Object, mapperMock.Object);
 
-			await userService.Register("user1@example.com", "user1", "secreD1");
+			await userService.Register("user1@example.com", "user1", "secreD1", "user");
 
 			userRepositoryMock.Verify(x => x.Add(It.IsAny<User>()), Times.Once);
 		}

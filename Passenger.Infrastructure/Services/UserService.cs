@@ -1,20 +1,22 @@
-﻿using Passenger.Core.Domain;
+﻿using AutoMapper;
+using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.Dto;
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 
 namespace Passenger.Infrastructure.Services
 {
 	public class UserService : IUserService
 	{
 		private readonly IUserRepository _userRepository;
+		private readonly IEncrypter _encrypter;
 		private readonly IMapper _mapper;
 
-		public UserService(IUserRepository userRepository, IMapper mapper)
+		public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
 		{
 			_userRepository = userRepository;
+			_encrypter = encrypter;
 			_mapper = mapper;
 		}
 
@@ -25,14 +27,26 @@ namespace Passenger.Infrastructure.Services
 			return _mapper.Map<User, UserDto>(user);
 		}
 
-		public async Task Register(string email, string username, string password)
+		public async Task Login(string email, string password)
+		{
+			var user = await _userRepository.Get(email);
+			if (user == null)
+				throw new InvalidOperationException("Invalid credentials.");
+
+			var hash = _encrypter.GetHash(password, user.Salt);
+			if (user.PasswordHash != hash)
+				throw new Exception("Invalid credentials.");
+		}
+
+		public async Task Register(string email, string username, string password, string role)
 		{
 			var user = await _userRepository.Get(email);
 			if (user != null)
 				throw new InvalidOperationException($"User with email '{email}' already exists.");
 
-			var salt = Guid.NewGuid().ToString();
-			user = new User(email, password, salt, username);
+			var salt = _encrypter.GetSalt();
+			var passwordHash = _encrypter.GetHash(password, salt);
+			user = new User(email, passwordHash, salt, username, role);
 			await _userRepository.Add(user);
 		}
 	}

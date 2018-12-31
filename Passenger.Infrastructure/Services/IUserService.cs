@@ -7,6 +7,7 @@ namespace Passenger.Infrastructure.Services
 	{
 		Task<UserDto> Get(string email);
 
-		Task Register(string email, string username, string password);
+		Task Login(string email, string password);
+		Task Register(string email, string username, string password, string role);
 	}
 }

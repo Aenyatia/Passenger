@@ -1,12 +1,17 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.IoC;
+using Passenger.Infrastructure.Settings;
 using System;
+using System.Text;
 
 namespace Passenger.Web
 {
@@ -20,7 +25,28 @@ namespace Passenger.Web
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMemoryCache();
 
+			// authentication - jwt token
+			var jwtSettings = Configuration.GetSettings<JwtSettings>();
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(x =>
+				{
+					x.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateIssuerSigningKey = true,
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+
+						ValidateIssuer = false,
+						ValidateAudience = false
+					};
+				});
+
+			// authorization
+			services.AddAuthorization(x =>
+				x.AddPolicy("MustBeAdmin", p => p.RequireRole("admin")));
+
+			// autofac
 			var builder = new ContainerBuilder();
 			builder.Populate(services);
 			builder.RegisterModule(new ContainerModule(Configuration));
@@ -35,6 +61,7 @@ namespace Passenger.Web
 				app.UseHsts();
 
 			app.UseHttpsRedirection();
+			app.UseAuthentication();
 			app.UseMvc();
 		}
 	}
