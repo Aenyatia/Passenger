@@ -42,9 +42,10 @@ namespace Passenger.IntegrationTests.Controllers
 		{
 			var command = new CreateUser
 			{
-				Email = "user10@example.com",
-				Username = "user10",
-				Password = "secreD1"
+				Email = "uniqueuser@example.com",
+				Username = "uniqueuser",
+				Password = "secreD1",
+				Role = "user"
 			};
 			var payload = GetPayload(command);
 

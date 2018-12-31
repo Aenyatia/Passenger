@@ -1,6 +1,7 @@
 ﻿using Passenger.Infrastructure.Commands.User;
 using Passenger.Infrastructure.CQS.Commands;
 using Passenger.Infrastructure.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Handlers.User
@@ -16,7 +17,7 @@ namespace Passenger.Infrastructure.Handlers.User
 
 		public async Task Handle(CreateUser command)
 		{
-			await _userService.Register(command.Email, command.Username, command.Password, command.Role);
+			await _userService.Register(Guid.NewGuid(), command.Email, command.Username, command.Password, command.Role);
 		}
 	}
 }

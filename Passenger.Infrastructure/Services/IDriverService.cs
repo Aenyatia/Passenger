@@ -1,6 +1,6 @@
-﻿using Passenger.Infrastructure.Commands.Driver;
-using Passenger.Infrastructure.Dto;
+﻿using Passenger.Infrastructure.Dto;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Services
@@ -8,7 +8,9 @@ namespace Passenger.Infrastructure.Services
 	public interface IDriverService : IService
 	{
 		Task<DriverDto> Get(Guid userId);
+		Task<IEnumerable<DriverDto>> GetAll();
 
-		Task Create(Guid userId, CreateDriver.DriverVehicle driverVehicle);
+		Task Create(Guid userId);
+		Task SetVehicle(Guid userId, string brand, string model, int seats);
 	}
 }

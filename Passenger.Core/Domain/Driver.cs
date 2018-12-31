@@ -6,14 +6,22 @@ namespace Passenger.Core.Domain
 	public sealed class Driver
 	{
 		public Guid UserId { get; private set; }
+		public string Name { get; private set; }
 		public Vehicle Vehicle { get; private set; }
 		public IEnumerable<Route> Routes { get; private set; }
 		public IEnumerable<DailyRoute> DailyRoutes { get; private set; }
+		public DateTime UpdatedAt { get; private set; }
 
-		public Driver(Guid userId, Vehicle vehicle)
+		public Driver(User user)
 		{
-			UserId = userId;
-			Vehicle = vehicle;
+			UserId = user.Id;
+			Name = user.Username;
+		}
+
+		public void SetVehicle(string brand, string model, int seats)
+		{
+			Vehicle = Vehicle.Create(brand, model, seats);
+			UpdatedAt = DateTime.UtcNow;
 		}
 	}
 }

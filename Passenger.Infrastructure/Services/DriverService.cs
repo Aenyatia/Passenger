@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
-using Passenger.Infrastructure.Commands.Driver;
 using Passenger.Infrastructure.Dto;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Services
@@ -28,20 +28,33 @@ namespace Passenger.Infrastructure.Services
 			return _mapper.Map<Driver, DriverDto>(driver);
 		}
 
-		public async Task Create(Guid userId, CreateDriver.DriverVehicle driverVehicle)
+		public async Task<IEnumerable<DriverDto>> GetAll()
+		{
+			var drivers = await _driverRepository.GetAll();
+			return _mapper.Map<IEnumerable<Driver>, IEnumerable<DriverDto>>(drivers);
+		}
+
+		public async Task Create(Guid userId)
 		{
 			var user = await _userRepository.Get(userId);
 			if (user == null)
-				throw new InvalidOperationException($"User with Id '{userId}' does not exists.");
+				throw new InvalidOperationException($"User with Id '{userId}' was not found.");
 
 			var driver = await _driverRepository.Get(userId);
 			if (driver != null)
-				throw new InvalidOperationException($"User with Id '{userId}' is already exists.");
+				throw new InvalidOperationException($"Driver with Id '{userId}' already exists.");
 
-			var vehicle = Vehicle.Create(driverVehicle.Brand, driverVehicle.Model, driverVehicle.Seats);
-			driver = new Driver(userId, vehicle);
-
+			driver = new Driver(user);
 			await _driverRepository.Add(driver);
+		}
+
+		public async Task SetVehicle(Guid userId, string brand, string model, int seats)
+		{
+			var driver = await _driverRepository.Get(userId);
+			if (driver == null)
+				throw new InvalidOperationException($"Driver with Id '{userId}' was not found.");
+
+			driver.SetVehicle(brand, model, seats);
 		}
 	}
 }

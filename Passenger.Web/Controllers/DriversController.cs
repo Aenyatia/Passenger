@@ -20,6 +20,17 @@ namespace Passenger.Web.Controllers
 			_commandDispatcher = commandDispatcher;
 		}
 
+		[HttpGet]
+		public async Task<IActionResult> Get()
+		{
+			var drivers = await _driverService.GetAll();
+
+			if (drivers == null)
+				return NotFound();
+
+			return Ok(drivers);
+		}
+
 		[HttpGet("{userId}")]
 		public async Task<IActionResult> Get(Guid userId)
 		{

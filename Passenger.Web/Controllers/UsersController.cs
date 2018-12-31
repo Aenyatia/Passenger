@@ -29,6 +29,17 @@ namespace Passenger.Web.Controllers
 			return Ok(user);
 		}
 
+		[HttpGet]
+		public async Task<IActionResult> Get()
+		{
+			var users = await _userService.GetAll();
+
+			if (users == null)
+				return NotFound();
+
+			return Ok(users);
+		}
+
 		[HttpPost]
 		public async Task<IActionResult> Post(CreateUser command)
 		{

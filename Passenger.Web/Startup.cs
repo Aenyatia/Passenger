@@ -12,6 +12,7 @@ using Passenger.Infrastructure.IoC;
 using Passenger.Infrastructure.Settings;
 using System;
 using System.Text;
+using Passenger.Infrastructure.Services;
 
 namespace Passenger.Web
 {
@@ -55,6 +56,14 @@ namespace Passenger.Web
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
+			// seed data
+			var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
+			if (generalSettings.SeedData)
+			{
+				var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+				dataInitializer.Seed();
+			}
+
 			if (env.IsDevelopment())
 				app.UseDeveloperExceptionPage();
 			else
