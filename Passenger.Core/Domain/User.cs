@@ -30,10 +30,10 @@ namespace Passenger.Core.Domain
 		public void SetUsername(string username)
 		{
 			if (string.IsNullOrWhiteSpace(username))
-				throw new ArgumentException("Username is required.", nameof(username));
+				throw new DomainException(DomainCode.InvalidUsername, "Username is required.");
 
 			if (Regex.IsMatch(username, @"[^\w]+$"))
-				throw new ArgumentException("Invalid username.", nameof(username));
+				throw new DomainException(DomainCode.InvalidUsername, "Username can only contains letters.");
 
 			if (Username == username)
 				return;
@@ -45,10 +45,10 @@ namespace Passenger.Core.Domain
 		public void SetEmail(string email)
 		{
 			if (string.IsNullOrWhiteSpace(email))
-				throw new ArgumentException("Email is required.", nameof(email));
+				throw new DomainException(DomainCode.InvalidEmail, "Email is required.");
 
 			if (!Regex.IsMatch(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase))
-				throw new ArgumentException("Invalid email.", nameof(email));
+				throw new DomainException(DomainCode.InvalidEmail, "Please enter valid address email.");
 
 			if (Email == email)
 				return;
@@ -60,7 +60,7 @@ namespace Passenger.Core.Domain
 		public void SetPassword(string password)
 		{
 			if (string.IsNullOrWhiteSpace(password))
-				throw new ArgumentException("PasswordHash is required.", nameof(password));
+				throw new DomainException(DomainCode.InvalidPassword, "Password is required.");
 
 			//if (!Regex.IsMatch(password, @"^(?=.*[A-Z])"))
 			//	throw new Exception("Required [A - Z].");

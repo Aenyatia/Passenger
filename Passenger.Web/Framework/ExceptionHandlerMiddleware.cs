@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Passenger.Core.Domain;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -39,7 +40,10 @@ namespace Passenger.Web.Framework
 					statusCode = HttpStatusCode.Unauthorized;
 					break;
 
-				//todo custom exceptions
+				case ServiceException e when exceptionType == typeof(ServiceException):
+					statusCode = HttpStatusCode.BadRequest;
+					errorCode = e.Code;
+					break;
 
 				default:
 					statusCode = HttpStatusCode.InternalServerError;

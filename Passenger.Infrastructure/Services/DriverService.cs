@@ -2,6 +2,7 @@
 using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.Dto;
+using Passenger.Infrastructure.Exceptions;
 using Passenger.Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace Passenger.Infrastructure.Services
 			var user = await _userRepository.GetOrFail(userId);
 			var driver = await _driverRepository.Get(userId);
 			if (driver != null)
-				throw new InvalidOperationException($"Driver with Id '{userId}' already exists.");
+				throw new ServiceException(ServiceCode.DriverAlreadyExists, $"Driver with Id '{userId}' already exists.");
 
 			driver = new Driver(user);
 			await _driverRepository.Add(driver);

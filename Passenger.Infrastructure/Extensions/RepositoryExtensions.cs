@@ -1,5 +1,6 @@
 ﻿using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
+using Passenger.Infrastructure.Exceptions;
 using System;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Passenger.Infrastructure.Extensions
 		{
 			var driver = await repository.Get(userId);
 			if (driver == null)
-				throw new Exception($"Driver with Id: '{userId}' was not found.");
+				throw new ServiceException(ServiceCode.DriverNotFound, $"Driver with Id: '{userId}' was not found.");
 
 			return driver;
 		}
@@ -20,7 +21,7 @@ namespace Passenger.Infrastructure.Extensions
 		{
 			var user = await repository.Get(userId);
 			if (user == null)
-				throw new Exception($"User with Id: '{userId}' was not found.");
+				throw new ServiceException(ServiceCode.UserNotFound, $"User with Id: '{userId}' was not found.");
 
 			return user;
 		}
