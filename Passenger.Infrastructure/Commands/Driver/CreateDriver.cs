@@ -12,7 +12,6 @@ namespace Passenger.Infrastructure.Commands.Driver
 		{
 			public string Brand { get; set; }
 			public string Model { get; set; }
-			public int Seats { get; set; }
 		}
 	}
 }

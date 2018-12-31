@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.IoC;
+using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
 using System;
 using System.Text;
-using Passenger.Infrastructure.Services;
 
 namespace Passenger.Web
 {
@@ -25,7 +26,9 @@ namespace Passenger.Web
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc()
+				.AddJsonOptions(x => x.SerializerSettings.Formatting = Formatting.Indented)
+				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 			services.AddMemoryCache();
 
 			// authentication - jwt token

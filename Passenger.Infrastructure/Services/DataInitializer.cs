@@ -34,7 +34,7 @@ namespace Passenger.Infrastructure.Services
 
 				_logger.LogCritical($"Created driver id: '{userId}'.");
 				tasks.Add(_driverService.Create(userId));
-				tasks.Add(_driverService.SetVehicle(userId, "BMW", "i8", 4));
+				tasks.Add(_driverService.SetVehicle(userId, "BMW", "i8"));
 			}
 			for (var i = 1; i <= 3; i++)
 			{

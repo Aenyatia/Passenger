@@ -21,8 +21,7 @@ namespace Passenger.Infrastructure.Handlers.Driver
 			var vehicle = command.Vehicle;
 			await _driverService.SetVehicle(command.UserId,
 				vehicle.Brand,
-				vehicle.Model,
-				vehicle.Seats);
+				vehicle.Model);
 		}
 	}
 }

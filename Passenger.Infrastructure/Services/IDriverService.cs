@@ -11,6 +11,6 @@ namespace Passenger.Infrastructure.Services
 		Task<IEnumerable<DriverDto>> GetAll();
 
 		Task Create(Guid userId);
-		Task SetVehicle(Guid userId, string brand, string model, int seats);
+		Task SetVehicle(Guid userId, string brand, string model);
 	}
 }

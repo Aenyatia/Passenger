@@ -18,9 +18,9 @@ namespace Passenger.Core.Domain
 			Name = user.Username;
 		}
 
-		public void SetVehicle(string brand, string model, int seats)
+		public void SetVehicle(Vehicle vehicle)
 		{
-			Vehicle = Vehicle.Create(brand, model, seats);
+			Vehicle = vehicle;
 			UpdatedAt = DateTime.UtcNow;
 		}
 	}
