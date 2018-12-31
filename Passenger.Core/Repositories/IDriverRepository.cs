@@ -12,6 +12,6 @@ namespace Passenger.Core.Repositories
 
 		Task Add(Driver driver);
 		Task Update(Driver driver);
-		Task Delete(Guid userId);
+		Task Delete(Driver driver);
 	}
 }

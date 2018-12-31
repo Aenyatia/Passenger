@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Passenger.Core.Domain;
+﻿using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.Extensions;
 using System;
@@ -10,17 +9,12 @@ namespace Passenger.Infrastructure.Services
 	public class DriverRouteService : IDriverRouteService
 	{
 		private readonly IDriverRepository _driverRepository;
-		private readonly IUserRepository _userRepository;
 		private readonly IRootManager _rootManager;
-		private readonly IMapper _mapper;
 
-		public DriverRouteService(IDriverRepository driverRepository, IUserRepository userRepository,
-			IRootManager rootManager, IMapper mapper)
+		public DriverRouteService(IDriverRepository driverRepository, IRootManager rootManager)
 		{
 			_driverRepository = driverRepository;
-			_userRepository = userRepository;
 			_rootManager = rootManager;
-			_mapper = mapper;
 		}
 
 		public async Task Add(Guid userId, string name, double startLatitude, double startLongitude, double endLatitude,

@@ -48,5 +48,21 @@ namespace Passenger.Web.Controllers
 
 			return Created($"drivers/{command.UserId}", null);
 		}
+
+		[HttpPut("me")]
+		public async Task<IActionResult> Put(UpdateDriver command)
+		{
+			await _commandDispatcher.Dispatch(command);
+
+			return NoContent();
+		}
+
+		[HttpDelete("me")]
+		public async Task<IActionResult> Delete(DeleteDriver command)
+		{
+			await _commandDispatcher.Dispatch(command);
+
+			return NoContent();
+		}
 	}
 }

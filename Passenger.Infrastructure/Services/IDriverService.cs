@@ -12,5 +12,6 @@ namespace Passenger.Infrastructure.Services
 
 		Task Create(Guid userId);
 		Task SetVehicle(Guid userId, string brand, string model);
+		Task Remove(Guid userId);
 	}
 }

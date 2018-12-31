@@ -14,7 +14,6 @@ namespace Passenger.Infrastructure.Handlers.Driver
 			_driverRouteService = driverRouteService;
 		}
 
-
 		public async Task Handle(DeleteDriverRoute command)
 		{
 			await _driverRouteService.Delete(command.UserId, command.Name);

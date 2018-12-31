@@ -31,9 +31,9 @@ namespace Passenger.Infrastructure.Repositories
 			throw new NotImplementedException();
 		}
 
-		public async Task Delete(Guid userId)
+		public async Task Delete(Driver driver)
 		{
-			throw new NotImplementedException();
+			Drivers.Remove(driver);
 		}
 	}
 }

@@ -57,5 +57,11 @@ namespace Passenger.Infrastructure.Services
 			var vehicle = Vehicle.Create(vehicleDetails.Brand, vehicleDetails.Model, vehicleDetails.Seats);
 			driver.SetVehicle(vehicle);
 		}
+
+		public async Task Remove(Guid userId)
+		{
+			var driver = await _driverRepository.GetOrFail(userId);
+			await _driverRepository.Delete(driver);
+		}
 	}
 }
