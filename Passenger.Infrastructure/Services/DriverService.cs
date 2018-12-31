@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NLog;
 using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.Dto;
@@ -12,6 +13,8 @@ namespace Passenger.Infrastructure.Services
 {
 	public class DriverService : IDriverService
 	{
+		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
 		private readonly IDriverRepository _driverRepository;
 		private readonly IMapper _mapper;
 		private readonly IUserRepository _userRepository;
@@ -35,6 +38,7 @@ namespace Passenger.Infrastructure.Services
 
 		public async Task<IEnumerable<DriverDto>> GetAll()
 		{
+			logger.Warn("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 			var drivers = await _driverRepository.GetAll();
 
 			return _mapper.Map<IEnumerable<DriverDto>>(drivers);

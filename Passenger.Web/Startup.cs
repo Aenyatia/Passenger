@@ -12,9 +12,9 @@ using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.IoC;
 using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
+using Passenger.Web.Framework;
 using System;
 using System.Text;
-using Passenger.Web.Framework;
 
 namespace Passenger.Web
 {

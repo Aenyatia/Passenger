@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NLog;
 using Passenger.Infrastructure.Commands.Driver;
 using Passenger.Infrastructure.CQS.Commands;
 using Passenger.Infrastructure.Services;
@@ -11,6 +12,7 @@ namespace Passenger.Web.Controllers
 	[ApiController]
 	public class DriversController : ControllerBase
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 		private readonly IDriverService _driverService;
 		private readonly ICommandDispatcher _commandDispatcher;
 
@@ -23,6 +25,7 @@ namespace Passenger.Web.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
+			Logger.Info("Fetching the data.");
 			var drivers = await _driverService.GetAll();
 
 			if (drivers == null)

@@ -20,7 +20,6 @@ namespace Passenger.Web.Controllers
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
-			throw new Exception();
 			return new[] { "value1", "value2", _generalSettings.AppName };
 		}
 

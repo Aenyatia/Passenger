@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using NLog.Web;
 
 namespace Passenger.Web
 {
@@ -10,6 +11,7 @@ namespace Passenger.Web
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args)
 			=> WebHost.CreateDefaultBuilder(args)
+				.UseNLog()
 				.UseStartup<Startup>();
 	}
 }
