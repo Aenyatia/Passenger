@@ -8,10 +8,15 @@ namespace Passenger.Core.Domain
 		public double Longitude { get; private set; }
 		public double Latitude { get; private set; }
 
-		public Node()
+		private Node(string address, double longitude, double latitude)
 		{
-			
+			SetAddress(address);
+			SetLongitude(longitude);
+			SetLatitude(latitude);
 		}
+
+		public static Node Create(string address, double longitude, double latitude)
+			=> new Node(address, longitude, latitude);
 
 		public void SetAddress(string address)
 		{

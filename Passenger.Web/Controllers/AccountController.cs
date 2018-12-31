@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commands.User;
 using Passenger.Infrastructure.CQS.Commands;
 using Passenger.Infrastructure.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace Passenger.Web.Controllers
@@ -23,7 +24,7 @@ namespace Passenger.Web.Controllers
 		[HttpGet("token")]
 		public IActionResult Get()
 		{
-			var token = _jwtHandler.CreateToken("user1@example.com", "admin");
+			var token = _jwtHandler.CreateToken(Guid.NewGuid(), "admin");
 
 			return Ok(token);
 		}

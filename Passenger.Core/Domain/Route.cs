@@ -7,10 +7,16 @@ namespace Passenger.Core.Domain
 		public Guid Id { get; private set; }
 		public Node StartNode { get; private set; }
 		public Node EndNode { get; private set; }
+		public string Name { get; private set; }
 
-		public Route()
+		private Route(string name, Node startNode, Node endNode)
 		{
-			
+			Name = name;
+			StartNode = startNode;
+			EndNode = endNode;
 		}
+
+		public static Route Create(string name, Node start, Node end)
+			=> new Route(name, start, end);
 	}
 }

@@ -7,7 +7,7 @@ namespace Passenger.Infrastructure.Services
 {
 	public interface IDriverService : IService
 	{
-		Task<DriverDto> Get(Guid userId);
+		Task<DriverDetailsDto> Get(Guid userId);
 		Task<IEnumerable<DriverDto>> GetAll();
 
 		Task Create(Guid userId);

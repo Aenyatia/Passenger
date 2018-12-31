@@ -9,12 +9,15 @@ namespace Passenger.Infrastructure.Services
 	{
 		private readonly IUserService _userService;
 		private readonly IDriverService _driverService;
+		private readonly IDriverRouteService _driverRouteService;
 		private readonly ILogger<DataInitializer> _logger;
 
-		public DataInitializer(IUserService userService, IDriverService driverService, ILogger<DataInitializer> logger)
+		public DataInitializer(IUserService userService, IDriverService driverService,
+			IDriverRouteService driverRouteService, ILogger<DataInitializer> logger)
 		{
 			_userService = userService;
 			_driverService = driverService;
+			_driverRouteService = driverRouteService;
 			_logger = logger;
 		}
 
@@ -35,6 +38,11 @@ namespace Passenger.Infrastructure.Services
 				_logger.LogCritical($"Created driver id: '{userId}'.");
 				tasks.Add(_driverService.Create(userId));
 				tasks.Add(_driverService.SetVehicle(userId, "BMW", "i8"));
+
+				_logger.LogDebug($"Adding route for: '{username}'.");
+				tasks.Add(_driverRouteService.Add(userId, "Default", 1, 1, 1, 1));
+				tasks.Add(_driverRouteService.Add(userId, "Work route", 1, 2, 3, 4));
+
 			}
 			for (var i = 1; i <= 3; i++)
 			{
@@ -47,7 +55,6 @@ namespace Passenger.Infrastructure.Services
 			await Task.WhenAll(tasks);
 
 			_logger.LogError("Data was initialized.");
-			_logger.LogDebug("Debug disabled.");
 		}
 	}
 }

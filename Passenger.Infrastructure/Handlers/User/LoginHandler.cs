@@ -1,9 +1,9 @@
-﻿using Passenger.Infrastructure.Commands.User;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Passenger.Infrastructure.Commands.User;
 using Passenger.Infrastructure.CQS.Commands;
+using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.Services;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
-using Passenger.Infrastructure.Extensions;
 
 namespace Passenger.Infrastructure.Handlers.User
 {
@@ -24,7 +24,7 @@ namespace Passenger.Infrastructure.Handlers.User
 		{
 			await _userService.Login(command.Email, command.Password);
 			var user = await _userService.Get(command.Email);
-			var jwt = _jwtHandler.CreateToken(user.Email, user.Role);
+			var jwt = _jwtHandler.CreateToken(user.Id, user.Role);
 
 			_memoryCache.SetJwt(command.TokenId, jwt);
 		}

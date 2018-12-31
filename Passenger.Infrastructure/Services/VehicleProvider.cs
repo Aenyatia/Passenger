@@ -60,7 +60,7 @@ namespace Passenger.Infrastructure.Services
 
 		public async Task<VehicleDto> Get(string brand, string model)
 		{
-			if (AvailableVehicles.ContainsKey(brand))
+			if (!AvailableVehicles.ContainsKey(brand))
 				throw new ArgumentException($"Vehicle brand '{brand}' is not available.");
 
 			var vehicles = AvailableVehicles[brand];
