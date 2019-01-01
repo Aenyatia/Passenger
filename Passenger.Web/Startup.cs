@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Passenger.Infrastructure.EntityFramework;
 using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.IoC;
 using Passenger.Infrastructure.Mongo;
@@ -32,6 +33,9 @@ namespace Passenger.Web
 				.AddJsonOptions(x => x.SerializerSettings.Formatting = Formatting.Indented)
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 			services.AddMemoryCache();
+			services.AddEntityFrameworkSqlServer()
+				.AddEntityFrameworkInMemoryDatabase()
+				.AddDbContext<PassengerContext>();
 
 			// authentication - jwt token
 			var jwtSettings = Configuration.GetSettings<JwtSettings>();

@@ -8,6 +8,8 @@ namespace Passenger.Core.Domain
 		public string Model { get; private set; }
 		public int Seats { get; private set; }
 
+		private Vehicle() { }
+
 		private Vehicle(string brand, string model, int seats)
 		{
 			SetBrand(brand);

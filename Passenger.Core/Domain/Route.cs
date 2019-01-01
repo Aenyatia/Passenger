@@ -10,6 +10,8 @@ namespace Passenger.Core.Domain
 		public string Name { get; private set; }
 		public double Distance { get; private set; }
 
+		private Route() { }
+
 		private Route(string name, Node startNode, Node endNode, double distance)
 		{
 			Name = name;

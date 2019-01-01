@@ -8,6 +8,8 @@ namespace Passenger.Core.Domain
 		public double Longitude { get; private set; }
 		public double Latitude { get; private set; }
 
+		private Node() { }
+
 		private Node(string address, double longitude, double latitude)
 		{
 			SetAddress(address);

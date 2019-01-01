@@ -24,6 +24,9 @@ namespace Passenger.Infrastructure.IoC.Modules
 
 			builder.RegisterInstance(_configuration.GetSettings<MongoSettings>())
 				.SingleInstance();
+
+			builder.RegisterInstance(_configuration.GetSettings<SqlSettings>())
+				.SingleInstance();
 		}
 	}
 }

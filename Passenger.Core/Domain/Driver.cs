@@ -16,6 +16,8 @@ namespace Passenger.Core.Domain
 		public IEnumerable<DailyRoute> DailyRoutes => _dailyRoutes;
 		public DateTime UpdatedAt { get; private set; }
 
+		private Driver() { }
+
 		public Driver(User user)
 		{
 			UserId = user.Id;
