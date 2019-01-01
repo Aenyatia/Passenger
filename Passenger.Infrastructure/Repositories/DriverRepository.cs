@@ -28,7 +28,7 @@ namespace Passenger.Infrastructure.Repositories
 
 		public async Task Update(Driver driver)
 		{
-			throw new NotImplementedException();
+
 		}
 
 		public async Task Delete(Driver driver)

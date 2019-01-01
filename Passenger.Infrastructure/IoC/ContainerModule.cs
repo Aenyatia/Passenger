@@ -20,6 +20,7 @@ namespace Passenger.Infrastructure.IoC
 			builder.RegisterModule<AutoMapperModule>();
 			builder.RegisterModule<CommandModule>();
 			builder.RegisterModule<RepositoryModule>();
+			builder.RegisterModule<MongoModule>();
 			builder.RegisterModule<ServiceModule>();
 		}
 	}
