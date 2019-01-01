@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.IoC;
+using Passenger.Infrastructure.Mongo;
 using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
 using Passenger.Web.Framework;
@@ -67,6 +68,7 @@ namespace Passenger.Web
 				var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
 				dataInitializer.Seed();
 			}
+			MongoConfigurator.Initialize();
 
 			if (env.IsDevelopment())
 				app.UseDeveloperExceptionPage();
